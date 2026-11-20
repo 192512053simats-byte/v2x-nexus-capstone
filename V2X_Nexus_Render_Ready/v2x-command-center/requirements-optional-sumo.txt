@@ -1,0 +1,2 @@
+# Optional only. Also install the full SUMO simulator before using the exporter.
+traci>=1.20

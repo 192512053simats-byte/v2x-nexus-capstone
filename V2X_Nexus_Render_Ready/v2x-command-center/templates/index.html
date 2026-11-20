@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080e1e">
+  <meta name="description" content="A reproducible cooperative perception V2X network simulation dashboard with AI-assisted message prioritisation.">
+  <title>V2X Nexus | Cooperative Perception Laboratory</title>
+  <link rel="stylesheet" href="/static/css/styles.css">
+  <script src="/static/js/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><svg viewBox="0 0 40 40" fill="none"><path d="M7 26L19.5 6 32 26H24.2L19.5 18.5 14.8 26H7Z" fill="currentColor"/><path d="M7 31H33" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+        <div><span class="brand-name">V2X<span>NEXUS</span></span><small>INTELLIGENT MOBILITY LAB</small></div>
+      </div>
+      <div class="nav-caption">WORKSPACE</div>
+      <nav class="nav-stack" aria-label="Main navigation">
+        <button class="nav-item active" data-nav="overview"><span class="nav-icon">◫</span><span>Overview</span></button>
+        <button class="nav-item" data-nav="simulation"><span class="nav-icon">⌘</span><span>Live Simulation</span><span class="nav-pill">LIVE</span></button>
+        <button class="nav-item" data-nav="experiments"><span class="nav-icon">▥</span><span>Experiments</span></button>
+        <button class="nav-item" data-nav="architecture"><span class="nav-icon">◇</span><span>Architecture</span></button>
+        <button class="nav-item" data-nav="documentation"><span class="nav-icon">▤</span><span>Documentation</span></button>
+      </nav>
+      <div class="nav-caption modules-caption">SYSTEM MODULES</div>
+      <div class="module-list">
+        <div><span class="module-dot cyan"></span> Traffic generator <b id="trafficStatusMini">READY</b></div>
+        <div><span class="module-dot purple"></span> AI priority engine <b id="modelMini">READY</b></div>
+        <div><span class="module-dot green"></span> Perception fusion <b>READY</b></div>
+        <div><span class="module-dot amber"></span> ns-3 / 5G-LENA <b class="dim-status">OPTIONAL</b></div>
+      </div>
+      <div class="side-footer">
+        <div class="status-orb"></div>
+        <div><strong>LOCAL RESEARCH MODE</strong><small>Offline-friendly · No hardware required</small></div>
+      </div>
+    </aside>
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-left"><button id="mobileMenu" class="mobile-menu" aria-label="Open menu">☰</button><span class="crumb-muted">Research Workspace</span><span class="crumb-sep">/</span><strong>Command Center</strong></div>
+        <div class="topbar-right"><span class="env-pill"><span class="tiny-dot"></span> LOCAL ENVIRONMENT</span><span class="divider-v"></span><button class="btn btn-ghost btn-sm" id="exportJsonTop" title="Export experiment data">↓ <span>Export Data</span></button><button class="btn btn-primary btn-sm" id="runTop">▶ &nbsp;Run Experiment</button></div>
+      </header>
+      <main class="content">
+        <section id="overview" class="hero">
+          <div class="hero-copy">
+            <div class="eyebrow"><span class="eyebrow-line"></span> NEXT-GEN VEHICULAR INTELLIGENCE <span class="version-chip">RESEARCH V1.0</span></div>
+            <h1>Intelligent streets.<br><em>Informed decisions.</em></h1>
+            <p>Explore how communication-aware AI prioritises critical V2X messages and improves cooperative perception under constrained network conditions.</p>
+            <div class="hero-actions"><button class="btn btn-primary" id="heroRun">▶ &nbsp;Launch Simulation</button><button class="btn btn-outline" data-jump="architecture">Explore Architecture <span>↗</span></button></div>
+          </div>
+          <div class="hero-visual" aria-hidden="true">
+            <div class="orbit orbit-1"></div><div class="orbit orbit-2"></div><div class="orbit orbit-3"></div>
+            <div class="orbit-glow"></div><div class="core"><div class="core-inner">V2X</div></div>
+            <div class="satellite sat-one">⌁<span>VEHICLE</span></div><div class="satellite sat-two">✦<span>AI ENGINE</span></div><div class="satellite sat-three">⌁<span>NETWORK</span></div>
+          </div>
+        </section>
+        <section class="kpi-grid" aria-label="Main performance indicators">
+          <article class="kpi-card"><div class="kpi-top"><span>AVERAGE LATENCY</span><span class="kpi-icon color-cyan">◷</span></div><div class="kpi-value"><span id="kpiLatency">—</span><small>ms</small></div><div class="kpi-foot"><span id="latencyDiff" class="delta neutral">Awaiting run</span><span>vs. FIFO</span></div><div class="kpi-spark kpi-spark-one"></div></article>
+          <article class="kpi-card"><div class="kpi-top"><span>HAZARD AWARENESS</span><span class="kpi-icon color-purple">◎</span></div><div class="kpi-value"><span id="kpiAwareness">—</span><small>%</small></div><div class="kpi-foot"><span id="awarenessDiff" class="delta neutral">Awaiting run</span><span>vs. FIFO</span></div><div class="kpi-spark kpi-spark-two"></div></article>
+          <article class="kpi-card"><div class="kpi-top"><span>SAFETY PACKET DELIVERY</span><span class="kpi-icon color-green">⇄</span></div><div class="kpi-value"><span id="kpiPdr">—</span><small>%</small></div><div class="kpi-foot"><span id="pdrDiff" class="delta neutral">Awaiting run</span><span>vs. FIFO</span></div><div class="kpi-spark kpi-spark-three"></div></article>
+          <article class="kpi-card"><div class="kpi-top"><span>CHANNEL DATA SENT</span><span class="kpi-icon color-amber">◈</span></div><div class="kpi-value"><span id="kpiBytes">—</span><small>KB</small></div><div class="kpi-foot"><span id="kpiMessages">0 packets sent</span><span>All traffic</span></div><div class="kpi-spark kpi-spark-four"></div></article>
+        </section>
+        <section id="simulation" class="section-block">
+          <div class="section-heading"><div><div class="section-eyebrow">REAL-TIME VISUALISATION</div><h2>Simulation Workspace <span class="heading-mark">/ 01</span></h2></div><div class="heading-side"><span class="legend-dot l-vehicle"></span> Connected vehicles <span class="legend-dot l-hazard"></span> Road hazards <span class="legend-dot l-data"></span> Messages</div></div>
+          <div class="sim-grid">
+            <div class="panel map-panel">
+              <div class="panel-header map-header"><div><span class="live-badge"><span class="tiny-dot"></span> <span id="simBadge">SIMULATION READY</span></span><h3>Vehicle & Hazard Environment</h3></div><div class="small-pills"><span id="mapMode">INTERSECTION</span><span id="timeDisplay">T + 0.0s</span></div></div>
+              <div class="map-wrap"><canvas id="roadCanvas" width="960" height="540" aria-label="Animated top-down simulated intersection with connected vehicles and hazards" role="img"></canvas><div class="map-watermark">V2X NEXUS / TRAFFIC DIGITAL TWIN</div><div class="map-scale">SCHEMATIC · NOT TO SCALE</div></div>
+              <div class="playback-bar"><div class="playback-controls"><button id="playPause" class="round-play" title="Play or pause simulation" aria-label="Play or pause">▶</button><button id="stepBack" class="icon-btn" title="Previous frame" aria-label="Previous frame">|‹</button><button id="stepForward" class="icon-btn" title="Next frame" aria-label="Next frame">›|</button></div><input type="range" min="0" max="47" value="0" id="timeline" aria-label="Simulation timeline"><span class="playback-time" id="playbackTime">0.0 / 4.7s</span><select id="playSpeed" aria-label="Playback speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option></select></div>
+              <div class="map-stats"><div><small>ACTIVE VEHICLES</small><strong id="statVehicles">24</strong></div><div><small>ACTIVE HAZARDS</small><strong id="statHazards">0</strong></div><div><small>QUEUE DEPTH</small><strong id="statQueue">0</strong></div><div><small>PACKETS DELIVERED</small><strong id="statDelivered">0</strong></div><div><small>CHANNEL CAPACITY</small><strong id="statCapacity">0<span class="muted-unit"> / tick</span></strong></div></div>
+            </div>
+            <div class="panel control-panel"><div class="panel-header"><div><div class="panel-caption">EXPERIMENT SETTINGS</div><h3>Simulation Controls</h3></div><span class="control-gear">⚙</span></div><div class="control-content">
+              <label class="form-label" for="scenario">Traffic Scenario</label><select class="form-select" id="scenario"><option value="intersection">Urban Intersection</option><option value="urban">Urban Multi-Road</option><option value="highway">Connected Highway</option></select>
+              <label class="form-label" for="source">Traffic Source</label><select class="form-select" id="source"><option value="synthetic">Built-in Traffic Generator</option><option value="trace">Imported SUMO Trace (optional)</option></select><div class="help-text" id="sourceHint">Ready to run; no SUMO installation needed.</div>
+              <div class="range-title"><label for="vehicles">Connected Vehicles</label><strong id="vehicleNumber">24</strong></div><input class="range-input" id="vehicles" type="range" min="8" max="54" step="2" value="24"><div class="range-hints"><span>8 · Light</span><span>54 · Dense</span></div>
+              <div class="range-title"><label for="load">Network Congestion</label><strong id="loadNumber">52%</strong></div><input class="range-input" id="load" type="range" min="0" max="100" step="1" value="52"><div class="range-hints"><span>Low congestion</span><span>High congestion</span></div>
+              <div class="range-title"><label for="capacity">Channel Capacity</label><strong id="capacityNumber">11 packets/tick</strong></div><input class="range-input" id="capacity" type="range" min="4" max="24" value="11"><div class="range-hints"><span>Constrained</span><span>High capacity</span></div>
+              <label class="form-label" for="scheduler">Visible Scheduler</label><div class="segmented" id="scheduler" role="group" aria-label="Select scheduler to visualise"><button type="button" class="seg active" data-scheduler="ai">✦ AI Priority</button><button type="button" class="seg" data-scheduler="fifo">FIFO Baseline</button></div>
+              <div class="form-inline"><div><label class="form-label" for="duration">Simulation Ticks</label><select class="form-select" id="duration"><option value="32">32 ticks</option><option value="48" selected>48 ticks</option><option value="64">64 ticks</option></select></div><div><label class="form-label" for="seed">Random Seed</label><input class="form-select" id="seed" type="number" min="1" max="999999" value="42"></div></div>
+              <button class="btn btn-primary run-full" id="runPrimary">▶ &nbsp;Run Comparison</button><div class="control-note"><span>ⓘ</span> Both methods use the same generated traffic, messages and packet-loss draws.</div>
+            </div></div>
+        </section>
+        <section id="experiments" class="section-block results-section"><div class="section-heading"><div><div class="section-eyebrow">EVIDENCE-BASED COMPARISON</div><h2>Performance Analytics <span class="heading-mark">/ 02</span></h2></div><button class="btn btn-outline btn-sm" id="exportCsv">↓ &nbsp;Download CSV</button></div>
+          <div class="analytics-grid"><div class="panel chart-panel"><div class="panel-header"><div><div class="panel-caption">NETWORK PERFORMANCE</div><h3>Latency Over Simulation Time</h3></div><div class="chart-legend"><span><i class="swatch cyan-bg"></i>AI Priority</span><span><i class="swatch purple-bg"></i>FIFO</span></div></div><div class="chart-frame"><canvas id="latencyChart" width="800" height="300" aria-label="Line chart comparing AI and FIFO average packet latency by time" role="img"></canvas></div><div class="chart-footer">Lower latency is better. Values are simulated end-to-end message delays (milliseconds).</div></div>
+          <div class="panel event-panel"><div class="panel-header"><div><div class="panel-caption">V2X NETWORK ACTIVITY</div><h3>Live Event Feed</h3></div><span class="online-tag"><span class="tiny-dot"></span> SYNCED</span></div><div id="eventFeed" class="event-feed"><div class="empty-feed">Launch an experiment to see traffic and hazard events.</div></div><div class="event-footer"><span id="eventCount">0 EVENTS LOGGED</span><span>100 MS / TICK</span></div></div></div>
+          <div class="panel comparison-panel"><div class="panel-header"><div><div class="panel-caption">PAIRED EXPERIMENT • IDENTICAL SEED</div><h3>FIFO Baseline vs AI Scheduler</h3></div><span class="tip-tag">RESEARCH METRICS</span></div><div class="comparison-body"><div class="comparison-table-wrap"><table class="comparison-table"><thead><tr><th>PERFORMANCE METRIC</th><th>FIFO BASELINE</th><th>AI PRIORITY</th><th>CHANGE</th></tr></thead><tbody id="comparisonRows"><tr><td colspan="4" class="comparison-empty">Run an experiment to generate results</td></tr></tbody></table></div><div class="comparison-summary"><div class="summary-symbol">✦</div><div><strong id="summaryTitle">Run a paired simulation to begin</strong><p id="summaryText">Compare both scheduling algorithms under the same traffic demand and random seed. Improvements are experimental outputs, not assumed.</p></div></div></div></div>
+        </section>
+        <section id="architecture" class="section-block"><div class="section-heading"><div><div class="section-eyebrow">MODULAR SYSTEM DESIGN</div><h2>System Architecture <span class="heading-mark">/ 03</span></h2></div></div><div class="architecture-grid">
+          <div class="arch-card"><div class="arch-icon">◈</div><span>01 · INPUT</span><h3>Traffic Simulation</h3><p>Built-in deterministic vehicle motion, or optional SUMO snapshots exported with TraCI.</p><b>VEHICLE POSITION / SPEED</b></div>
+          <div class="arch-card"><div class="arch-icon purple-text">◎</div><span>02 · PERCEPTION</span><h3>Hazard & Visibility</h3><p>Simulated incidents, local sensor visibility, obstructed targets and shared observations.</p><b>BLIND SPOTS / HAZARDS</b></div>
+          <div class="arch-card"><div class="arch-icon green-text">⌁</div><span>03 · COMMUNICATION</span><h3>V2X Message Layer</h3><p>Capacity-constrained queues with message expiration, transmission delay and random loss.</p><b>CHANNEL / PACKET QUEUE</b></div>
+          <div class="arch-card"><div class="arch-icon amber-text">✦</div><span>04 · DECISION</span><h3>AI Priority Engine</h3><p>Lightweight random forest trained on synthetic labels to rank urgent, relevant packets.</p><b>ML RANKING / FIFO CONTROL</b></div>
+          <div class="arch-card"><div class="arch-icon">◉</div><span>05 · FUSION</span><h3>Cooperative Awareness</h3><p>Merge timely hazard observations and deduplicate reports for vehicle-event pairs.</p><b>RECEIVED SHARED KNOWLEDGE</b></div>
+          <div class="arch-card"><div class="arch-icon purple-text">▥</div><span>06 · ANALYTICS</span><h3>Evaluation Dashboard</h3><p>Compare latency, delivery, awareness and channel load with exportable measurements.</p><b>METRICS / REPRODUCIBILITY</b></div>
+        </div></section>
+        <section id="documentation" class="section-block documentation"><div class="section-heading"><div><div class="section-eyebrow">RESEARCH NOTES</div><h2>About This Prototype <span class="heading-mark">/ 04</span></h2></div></div><div class="docs-grid"><div class="panel docs-card"><div class="panel-caption">PURPOSE & LIMITATIONS</div><h3>6G-inspired V2X research sandbox</h3><p>This is an illustrative, reproducible capstone simulator—not a deployment-ready autonomous driving system or a validated 6G radio implementation. The built-in traffic, channel, and sensing models are deliberately simplified.</p><p>Use the dashboard to investigate trade-offs under controlled conditions. To make credible claims, run multiple random seeds and report the test configuration, average results, variability and limitations.</p><div class="doc-badges"><span>Python + Flask</span><span>scikit-learn</span><span>CANVAS VISUALISATION</span><span>OPTIONAL SUMO TRACI</span></div></div><div class="panel docs-card"><div class="panel-caption">INTEGRATION STATUS</div><div class="integration-list"><div><i class="state-dot green-bg"></i><span><strong>Web UI + REST API</strong><small>Fully operational in local Flask server</small></span><b>CONNECTED</b></div><div><i class="state-dot green-bg"></i><span><strong>AI Scheduling</strong><small>Synthetic-label model / heuristic fallback</small></span><b>CONNECTED</b></div><div><i class="state-dot amber-bg"></i><span><strong>SUMO / TraCI</strong><small>Import traces generated from a real SUMO run</small></span><b>OPTIONAL</b></div><div><i class="state-dot gray-bg"></i><span><strong>ns-3 / 5G-LENA</strong><small>Future packet-level radio integration</small></span><b>NOT CONNECTED</b></div></div></div></div></section>
+        <footer class="footer"><span>© V2X NEXUS — COOPERATIVE PERCEPTION CAPSTONE</span><span>Built for reproducible research · Local preview v1.0</span></footer>
+      </main>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
