@@ -4,6 +4,7 @@ services:
     name: v2x-nexus-capstone
     runtime: python
     plan: free
+    rootDir: V2X_Nexus_Render_Ready/v2x-command-center
     buildCommand: pip install -r requirements.txt
     startCommand: gunicorn --workers 1 --threads 2 --timeout 120 --bind 0.0.0.0:$PORT app:app
     healthCheckPath: /api/health
